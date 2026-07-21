@@ -41,7 +41,7 @@ const handleConnectACS = async () => {
 
   try {
     const endpoint = isAcsConnected.value ? 'disconnect' : 'connect'
-    const response = await fetch(`http://127.0.0.1:5055/api/acs/${endpoint}`, {
+    const response = await fetch(`/acs/api/acs/${endpoint}`, {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
@@ -82,7 +82,7 @@ const handleToggleAxis0Enable = async () => {
   isAxisEnableLoading.value = true
 
   try {
-    const response = await fetch('http://127.0.0.1:5055/api/acs/axis/0/enable-toggle', {
+    const response = await fetch('/acs/api/acs/axis/0/enable-toggle', {
       method: 'POST',
     })
     const result = await readJsonResponse(response)
