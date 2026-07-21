@@ -33,9 +33,8 @@ fi
 cd "${APP_DIR}"
 
 python3.12 -m venv .venv
-. .venv/bin/activate
-pip install --upgrade pip
-pip install -r requirements.txt
+.venv/bin/python -m pip install --upgrade pip
+.venv/bin/python -m pip install -r requirements.txt
 
 cd frontend
 npm install
@@ -53,8 +52,8 @@ set -a
 . ./.env.production
 set +a
 
-python manage.py collectstatic --noinput
-python manage.py migrate
+.venv/bin/python manage.py collectstatic --noinput
+.venv/bin/python manage.py migrate
 
 cat > /etc/systemd/system/${APP_NAME}.service <<EOF
 [Unit]
