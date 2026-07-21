@@ -15,6 +15,7 @@ const acsStatusMessage = ref('ACS 控制器未连接')
 const isAcsLoading = ref(false)
 const isAxis0Enabled = ref(false)
 const isAxisEnableLoading = ref(false)
+const ACS_BRIDGE_URL = 'http://127.0.0.1:5055'
 
 const readJsonResponse = async (response) => {
   const text = await response.text()
@@ -41,7 +42,7 @@ const handleConnectACS = async () => {
 
   try {
     const endpoint = isAcsConnected.value ? 'disconnect' : 'connect'
-    const response = await fetch(`/acs/api/acs/${endpoint}`, {
+    const response = await fetch(`${ACS_BRIDGE_URL}/api/acs/${endpoint}`, {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
@@ -64,7 +65,7 @@ const handleConnectACS = async () => {
     alert(acsStatusMessage.value)
   } catch (error) {
     isAcsConnected.value = false
-    acsStatusMessage.value = error.message || 'ACS Bridge 未启动或连接失败'
+    acsStatusMessage.value = error.message || '未检测到本机 ACS 助手，请先安装并启动本机助手'
     alert(acsStatusMessage.value)
   } finally {
     isAcsLoading.value = false
@@ -82,7 +83,7 @@ const handleToggleAxis0Enable = async () => {
   isAxisEnableLoading.value = true
 
   try {
-    const response = await fetch('/acs/api/acs/axis/0/enable-toggle', {
+    const response = await fetch(`${ACS_BRIDGE_URL}/api/acs/axis/0/enable-toggle`, {
       method: 'POST',
     })
     const result = await readJsonResponse(response)
