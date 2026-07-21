@@ -38,6 +38,12 @@ const readJsonResponse = async (response) => {
 const handleConnectACS = async () => {
   if (isAcsLoading.value) return
 
+  if (window.location.protocol === 'https:') {
+    acsStatusMessage.value = '当前页面是 HTTPS，浏览器会拦截访问本机 ACS 助手。请使用 http://47.122.124.86/laser-control 打开页面。'
+    alert(acsStatusMessage.value)
+    return
+  }
+
   isAcsLoading.value = true
 
   try {
@@ -74,6 +80,12 @@ const handleConnectACS = async () => {
 
 const handleToggleAxis0Enable = async () => {
   if (isAxisEnableLoading.value) return
+
+  if (window.location.protocol === 'https:') {
+    acsStatusMessage.value = '当前页面是 HTTPS，浏览器会拦截访问本机 ACS 助手。请使用 http://47.122.124.86/laser-control 打开页面。'
+    alert(acsStatusMessage.value)
+    return
+  }
 
   if (!isAcsConnected.value) {
     alert('请先连接 ACS 控制器')

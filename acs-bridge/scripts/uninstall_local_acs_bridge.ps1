@@ -12,4 +12,4 @@ if (Test-Path $installDir) {
   Remove-Item $installDir -Recurse -Force
 }
 
-Write-Host "本机 ACS 助手已卸载。"
+Write-Host "Local ACS Bridge uninstalled."

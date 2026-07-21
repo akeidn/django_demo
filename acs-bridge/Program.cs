@@ -21,6 +21,11 @@ builder.Services.AddSingleton<AcsConnectionService>();
 
 var app = builder.Build();
 
+app.Use(async (context, next) =>
+{
+    context.Response.Headers["Access-Control-Allow-Private-Network"] = "true";
+    await next();
+});
 app.UseCors();
 
 app.MapGet("/", () => Results.Ok(new { service = "ACS Bridge", status = "running" }));
