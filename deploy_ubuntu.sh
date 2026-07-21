@@ -7,8 +7,16 @@ REPO_URL="https://github.com/akeidn/django_demo.git"
 DOMAIN_OR_IP="${DOMAIN_OR_IP:-47.122.124.86}"
 DJANGO_SECRET_KEY="${DJANGO_SECRET_KEY:-$(openssl rand -hex 32)}"
 
+export DEBIAN_FRONTEND=noninteractive
+
 apt update
-apt install -y git curl nginx python3 python3-venv python3-pip
+apt install -y git curl nginx software-properties-common
+
+if ! command -v python3.12 >/dev/null 2>&1; then
+  add-apt-repository -y ppa:deadsnakes/ppa
+  apt update
+  apt install -y python3.12 python3.12-venv python3.12-dev
+fi
 
 if ! command -v node >/dev/null 2>&1; then
   curl -fsSL https://deb.nodesource.com/setup_22.x | bash -
@@ -24,7 +32,7 @@ fi
 
 cd "${APP_DIR}"
 
-python3 -m venv .venv
+python3.12 -m venv .venv
 . .venv/bin/activate
 pip install --upgrade pip
 pip install -r requirements.txt
